@@ -4,11 +4,11 @@ plugins {
 
 android {
   namespace 'com.ghb.cry'
-  compileSdk 33
+  compileSdk 31
 
   defaultConfig {
     minSdk 23
-    targetSdk 33
+    targetSdk 31
 
     ndk {
       abiFilters 'armeabi", "armeabi-v7a", "arm64-v8a'
