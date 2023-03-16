@@ -1,0 +1,3 @@
+include 'libcry'
+rootProject.name = "GhbCryLib"
+include ':myapplication'
