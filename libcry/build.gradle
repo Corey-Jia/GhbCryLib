@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-  compileSdkVersion 31
+  compileSdkVersion 30
   buildToolsVersion "28.0.3"
 
   defaultConfig {
     minSdkVersion 23
-    targetSdkVersion 31
+    targetSdkVersion 30
 
     ndk {
       abiFilters 'armeabi", "armeabi-v7a", "arm64-v8a'
@@ -38,6 +38,6 @@ android {
 dependencies {
   implementation fileTree(dir: "libs", include: ["*.jar"])
   implementation 'androidx.appcompat:appcompat:1.0.0'
-  implementation 'com.google.android.material:material:1.5.0'
+  implementation 'com.google.android.material:material:1.0.0'
   implementation "com.hht.library:hht-httplib:1.0.1"
 }
