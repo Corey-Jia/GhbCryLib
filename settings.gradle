@@ -27,6 +27,6 @@ dependencyResolutionManagement {
     mavenCentral()
   }
 }
-rootProject.name = "My Application"
+rootProject.name = "GhbCryLib"
 include ':app'
 include ':libcry'
