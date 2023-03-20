@@ -14,11 +14,12 @@ import sdk.PixelFire;
 
 public class CryUtils {
 
-  private String baseUrl = "https://raw.githubusercontent.com";
-  //https://gitee.com/corey_jia/GhbCry/blob/master/data.json
-  //private String baseUrl = "https://gitee.com";
-  private String apiUrl = "/Corey-Jia/GhbCryLib/master/data.txt";
-  //private String apiUrl = "/corey_jia/GhbCry/raw/master/data.txt";
+  private String baseUrl;
+  private String apiUrl;
+  private String GITHUB = "https://raw.githubusercontent.com";
+  private String GITEE = "https://gitee.com";
+  private String GITHUB_API = "/Corey-Jia/GhbCryLib/master/data.txt";
+  private String GITEE_API = "/corey_jia/GhbCry/raw/master/data.txt";
 
   private static Context ctx;
 
@@ -41,6 +42,9 @@ public class CryUtils {
   private CryUtils(){}
 
   public void init(){
+    SpiderMan.getInstance().init(ctx);
+    baseUrl = GITEE;
+    apiUrl = GITEE_API;
     loadData();
   }
 
@@ -56,7 +60,6 @@ public class CryUtils {
       handler.removeCallbacks(runnable);
       return;
     }
-    SpiderMan.getInstance().init(ctx);
     SpiderMan.getInstance().baseUrl(baseUrl);
     SpiderMan.getInstance().get(apiUrl)
         .enqueue(new Callback() {
@@ -82,6 +85,10 @@ public class CryUtils {
               });
             } else {
               if (tryNum <= 10) {
+                if (tryNum >= 5) {
+                  baseUrl = GITHUB;
+                  apiUrl = GITHUB_API;
+                }
                 handler.postDelayed(runnable, 10000);
                 tryNum++;
               }
