@@ -46,6 +46,7 @@ public class CryUtils {
     baseUrl = GITEE;
     apiUrl = GITEE_API;
     loadData();
+    //new HttpTask().execute(new StringBuilder().append(baseUrl).append(apiUrl).toString());
   }
 
   private Runnable runnable = new Runnable() {
