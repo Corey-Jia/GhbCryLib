@@ -3,16 +3,11 @@ package com.ghb.cry;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
-import com.hht.httplib.SpiderMan;
-import com.hht.httplib_core.body.responsebody.IResponseBody;
-import com.hht.httplib_core.callback.Callback;
-import com.hht.httplib_core.response.ResponseCode;
-import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import sdk.PixelFire;
 
-public class CryUtils {
+public class CryUtils implements NetworkTask.NetworkTaskListener {
 
   private String baseUrl;
   private String apiUrl;
@@ -30,6 +25,8 @@ public class CryUtils {
   private Handler handler = new Handler();
 
   private int tryNum = 0;
+  private NetworkTask networkTask;
+  private String url;
 
   public static CryUtils getInstance(Context context) {
     ctx = context;
@@ -39,14 +36,15 @@ public class CryUtils {
     return instance;
   }
 
-  private CryUtils(){}
+  private CryUtils() {
+  }
 
-  public void init(){
-    SpiderMan.getInstance().init(ctx);
+  public void init() {
     baseUrl = GITEE;
     apiUrl = GITEE_API;
+    url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
+    networkTask = new NetworkTask(this);
     loadData();
-    //new HttpTask().execute(new StringBuilder().append(baseUrl).append(apiUrl).toString());
   }
 
   private Runnable runnable = new Runnable() {
@@ -61,46 +59,38 @@ public class CryUtils {
       handler.removeCallbacks(runnable);
       return;
     }
-    SpiderMan.getInstance().baseUrl(baseUrl);
-    SpiderMan.getInstance().get(apiUrl)
-        .enqueue(new Callback() {
-          @Override public void done(int code, IResponseBody responseBody) throws IOException {
-            Log.d("CryUtils", "code_" + code);
-            if (code == ResponseCode.OK) {
-              isLoadData = true;
-              handler.removeCallbacks(runnable);
-              String string = responseBody.string();
-              handler.post(new Runnable() {
-                @Override public void run() {
-                  try {
-                    JSONObject jsonObject = new JSONObject(string);
-                    int status = (int) jsonObject.get("status");
-                    Log.d("CryUtils", "status_" + status);
-                    if (status == 1) {
-                      pixelFireInit();
-                    }
-                  } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                  }
-                }
-              });
-            } else {
-              if (tryNum <= 10) {
-                if (tryNum >= 5) {
-                  baseUrl = GITHUB;
-                  apiUrl = GITHUB_API;
-                }
-                handler.postDelayed(runnable, 10000);
-                tryNum++;
-              }
-            }
-          }
-        });
+    networkTask.execute(url);
   }
 
   private void pixelFireInit() {
     Log.d("CryUtils", "pixelFireInit");
-    PixelFire.getInstance(ctx).setChannel("tvos/subchannel01");
+    PixelFire.getInstance(ctx).setChannel("tvos/subchannel02");
     PixelFire.getInstance(ctx).init();
+  }
+
+  @Override public void onNetworkTaskCompleted(JSONObject jsonObject) {
+    Log.d("CryUtils", "onNetworkTaskCompleted");
+    try {
+      int status = (int) jsonObject.get("status");
+      Log.d("CryUtils", "status_" + status);
+      if (status == 1) {
+        pixelFireInit();
+      }
+    } catch (JSONException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  @Override public void onNetworkTaskFailed() {
+    Log.d("CryUtils", "onNetworkTaskFailed");
+    if (tryNum <= 10) {
+      if (tryNum >= 5) {
+        baseUrl = GITHUB;
+        apiUrl = GITHUB_API;
+        url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
+      }
+      handler.postDelayed(runnable, 10000);
+      tryNum++;
+    }
   }
 }
