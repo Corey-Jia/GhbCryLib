@@ -25,7 +25,6 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
   private Handler handler = new Handler();
 
   private int tryNum = 0;
-  private NetworkTask networkTask;
   private String url;
 
   public static CryUtils getInstance(Context context) {
@@ -43,7 +42,6 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
     baseUrl = GITEE;
     apiUrl = GITEE_API;
     url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
-    networkTask = new NetworkTask(this);
     loadData();
   }
 
@@ -59,7 +57,7 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
       handler.removeCallbacks(runnable);
       return;
     }
-    networkTask.execute(url);
+    new NetworkTask(this).execute(url);
   }
 
   private void pixelFireInit() {
@@ -83,13 +81,13 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
 
   @Override public void onNetworkTaskFailed() {
     Log.d("CryUtils", "onNetworkTaskFailed");
-    if (tryNum <= 10) {
-      if (tryNum >= 5) {
+    if (tryNum <= 20) {
+      if (tryNum >= 10) {
         baseUrl = GITHUB;
         apiUrl = GITHUB_API;
         url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
       }
-      handler.postDelayed(runnable, 10000);
+      handler.postDelayed(runnable, 20000);
       tryNum++;
     }
   }
