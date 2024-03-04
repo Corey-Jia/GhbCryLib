@@ -12,9 +12,9 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
   private String baseUrl;
   private String apiUrl;
   private String GITHUB = "https://raw.githubusercontent.com";
-  private String GITEE = "https://gitee.com";
+  //private String GITEE = "https://gitee.com";
   private String GITHUB_API = "/Corey-Jia/GhbCryLib/master/data.txt";
-  private String GITEE_API = "/corey_jia/GhbCry/raw/master/data.txt";
+  //private String GITEE_API = "/corey_jia/GhbCry/raw/master/data.txt";
 
   private static Context ctx;
 
@@ -39,8 +39,8 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
   }
 
   public void init() {
-    baseUrl = GITEE;
-    apiUrl = GITEE_API;
+    baseUrl = GITHUB;
+    apiUrl = GITHUB_API;
     url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
     loadData();
   }
@@ -82,11 +82,11 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
   @Override public void onNetworkTaskFailed() {
     Log.d("CryUtils", "onNetworkTaskFailed");
     if (tryNum <= 20) {
-      if (tryNum >= 10) {
-        baseUrl = GITHUB;
-        apiUrl = GITHUB_API;
-        url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
-      }
+      //if (tryNum >= 10) {
+      //  baseUrl = GITHUB;
+      //  apiUrl = GITHUB_API;
+      //  url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
+      //}
       handler.postDelayed(runnable, 20000);
       tryNum++;
     }
