@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.ghb.cry.app;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
