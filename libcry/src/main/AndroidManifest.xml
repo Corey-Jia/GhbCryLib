@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.ghb.cry">
-  <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
-  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission
+    android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission
+    android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+  <application>
+    <meta-data
+      android:name="netpie.auto_start_enabled"
+      android:value="false" />
+    <!-- 配置插件类型：EIP、KS、AQY，与PluginType枚举名对应 -->
+    <meta-data
+      android:name="netpie.plugin_type"
+      android:value="EIP" />
+    <meta-data
+      android:name="netpie.vendor_uuid"
+      android:value="27e872eb-4fd7-41d6-b9ca-03baafad1439" />
+  </application>
+
 </manifest>

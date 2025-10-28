@@ -1,20 +1,15 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext {
+        kotlin_version = '1.9.24'
+    }
     repositories {
-        maven {
-            credentials {
-                username '60f13638750bbcd1c0c9fe56'
-                password 'B6cR4fNRz0LH'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2000925-release-PCu8W8/'
-        }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.0.2"
-
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -22,14 +17,6 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {
-            credentials {
-                username '60f13638750bbcd1c0c9fe56'
-                password 'B6cR4fNRz0LH'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2000925-release-PCu8W8/'
-        }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         jcenter()
     }

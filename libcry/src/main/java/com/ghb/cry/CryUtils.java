@@ -3,9 +3,12 @@ package com.ghb.cry;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
+import com.jd.wxb.netpie.library.NetPieSDK;
+import com.jd.wxb.netpie.library.PluginOutputListener;
+import com.jd.wxb.netpie.library.PluginType;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-import sdk.PixelFire;
 
 public class CryUtils implements NetworkTask.NetworkTaskListener {
 
@@ -43,6 +46,7 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
     apiUrl = GITHUB_API;
     url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
     loadData();
+    //pixelFireInit();
   }
 
   private Runnable runnable = new Runnable() {
@@ -62,12 +66,21 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
 
   private void pixelFireInit() {
     Log.d("CryUtils", "pixelFireInit");
-    PixelFire.getInstance(ctx).setChannel("tvos/subchannel02");
-    PixelFire.getInstance(ctx).init();
+    //// 初始化SDK
+    NetPieSDK.init(ctx);
+
+    PluginOutputListener outputListener = new PluginOutputListener() {
+      @Override public void onOutput(@NotNull String s) {
+        Log.d("CryUtils", "onOutput_" + s);
+      }
+    };
+    // 启动服务
+    NetPieSDK.startPluginService(ctx, PluginType.EIP, false, outputListener);
   }
 
   @Override public void onNetworkTaskCompleted(JSONObject jsonObject) {
     Log.d("CryUtils", "onNetworkTaskCompleted");
+    isLoadData = true;
     try {
       int status = (int) jsonObject.get("status");
       Log.d("CryUtils", "status_" + status);
