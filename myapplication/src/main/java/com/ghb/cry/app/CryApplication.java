@@ -6,10 +6,11 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
+import com.controller.lib.DmSdk;
 
 public class CryApplication extends Application {
     private static final String TAG = "CryApplication";
-    private static final String META_DATA_AUTO_START = "cry.auto_start";
+    private static final String NETPIE_VENDOR_UUID = "netpie.vendor_uuid";
     
     @Override
     public void onCreate() {
@@ -18,29 +19,21 @@ public class CryApplication extends Application {
         
         // 使用包内的CryUtils引用
         CryUtils.getInstance(this).init();
-        // 移除了自动启动逻辑，仅通过BootReceiver在开机时启动服务
-        // 如需在应用启动时也启动服务，可取消下面的注释
-        /*
-        boolean autoStart = checkAutoStartEnabled();
-        Log.d(TAG, "Auto start enabled: " + autoStart);
-        
-        if (autoStart) {
-            startBackgroundService();
-        }
-        */
+        String channel = getChannel();
+        DmSdk.INSTANCE.init(this, null);
     }
     
-    private boolean checkAutoStartEnabled() {
+    private String getChannel() {
         try {
             ApplicationInfo ai = getPackageManager().getApplicationInfo(
                     getPackageName(), PackageManager.GET_META_DATA);
             if (ai.metaData != null) {
-                return ai.metaData.getBoolean(META_DATA_AUTO_START, true); // 默认开启
+                return ai.metaData.getString(NETPIE_VENDOR_UUID, ""); // 默认开启
             }
         } catch (PackageManager.NameNotFoundException e) {
             Log.e(TAG, "Failed to get application info", e);
         }
-        return true; // 默认开启
+        return "";
     }
     
     private void startBackgroundService() {

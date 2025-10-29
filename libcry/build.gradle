@@ -36,8 +36,8 @@ android {
 
 dependencies {
   // 使用compileOnly来依赖本地AAR中的类，编译时可用，运行时由应用模块提供
-  api(name: 'libnetpie', ext: 'aar')
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
+//  api(name: 'libnetpie', ext: 'aar')
+  implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
   implementation 'androidx.appcompat:appcompat:1.0.0'
 //  implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
