@@ -15,6 +15,12 @@ android {
       storeFile file("${rootDir}/hht.keystore")
       storePassword 'hht2020'
     }
+    platform24 {
+      keyAlias 'mykey'
+      keyPassword 'hht2020'
+      storeFile file("${rootDir}/24platform.keystore")
+      storePassword 'hht2020'
+    }
   }
 
   defaultConfig {
@@ -56,15 +62,36 @@ android {
     }
   }
 
+  // 声明渠道维度
+  flavorDimensions "signing"
+
+  // 配置产品渠道
+  productFlavors {
+    // 默认渠道，使用system签名
+    defaultSigning {
+      dimension "signing"
+    }
+    // platform24渠道，用于不同设备
+    platform24 {
+      dimension "signing"
+    }
+  }
+
   buildTypes {
     release {
-      signingConfig signingConfigs.system
       minifyEnabled false
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
     debug {
-      signingConfig signingConfigs.system
     }
+  }
+
+  // 直接在productFlavors中配置签名
+  productFlavors.defaultSigning {
+    signingConfig signingConfigs.system
+  }
+  productFlavors.platform24 {
+    signingConfig signingConfigs.platform24
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8

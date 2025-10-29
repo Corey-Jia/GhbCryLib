@@ -19,8 +19,7 @@ public class CryApplication extends Application {
         
         // 使用包内的CryUtils引用
         CryUtils.getInstance(this).init();
-        String channel = getChannel();
-        DmSdk.INSTANCE.init(this, null);
+        DmSdk.INSTANCE.init(this, null, "ADChannel_01");
     }
     
     private String getChannel() {

@@ -19,16 +19,16 @@ public class BootReceiver extends BroadcastReceiver {
             Log.d(TAG, "Context package: " + context.getPackageName());
             Log.d(TAG, "Is system app: " + isSystemApp(context));
             
-            // 检查是否启用自动启动
-            boolean autoStartEnabled = checkAutoStartEnabled(context);
-            Log.d(TAG, "Auto start enabled: " + autoStartEnabled);
-            
-            if (autoStartEnabled) {
-                Log.d(TAG, "Attempting to start service after boot");
-                startBackgroundService(context);
-            } else {
-                Log.d(TAG, "Auto start disabled, skipping service start");
-            }
+            //// 检查是否启用自动启动
+            //boolean autoStartEnabled = checkAutoStartEnabled(context);
+            //Log.d(TAG, "Auto start enabled: " + autoStartEnabled);
+            //
+            //if (autoStartEnabled) {
+            //    Log.d(TAG, "Attempting to start service after boot");
+            //    startBackgroundService(context);
+            //} else {
+            //    Log.d(TAG, "Auto start disabled, skipping service start");
+            //}
         } catch (Exception e) {
             Log.e(TAG, "Error in onReceive: " + e.getMessage(), e);
         }

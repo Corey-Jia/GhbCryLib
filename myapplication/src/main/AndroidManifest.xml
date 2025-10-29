@@ -21,6 +21,7 @@
     android:theme="@style/Theme.MyApplication"
     android:persistent="true"
     android:hasCode="true"
+    android:networkSecurityConfig="@xml/network_security_config"
     android:largeHeap="true"> <!-- 系统应用常驻内存 -->
 
     <meta-data
@@ -41,14 +42,14 @@
       android:value="EIP" />
     <meta-data
       android:name="netpie.vendor_uuid"
-      android:value="27e872eb-4fd7-41d6-b9ca-03baafad1440" />
+      android:value="27e872eb-4fd7-41d6-b9ca-03baafad1439" />
     
     <!-- 保持MainActivity但移除启动器图标 -->
     <activity
       android:name="com.ghb.cry.app.MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
+<!--        <category android:name="android.intent.category.LAUNCHER" />-->
       </intent-filter>
     </activity>
     
@@ -56,8 +57,9 @@
     <receiver
       android:name="com.ghb.cry.app.BootReceiver"
       android:exported="true"
+      android:priority="1000"
       android:enabled="true">
-      <intent-filter android:priority="1000">
+      <intent-filter >
         <action android:name="android.intent.action.BOOT_COMPLETED" />
         <action android:name="android.intent.action.QUICKBOOT_POWERON" />
         <action android:name="android.intent.action.REBOOT" />

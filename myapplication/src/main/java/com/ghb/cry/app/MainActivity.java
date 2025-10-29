@@ -2,7 +2,6 @@ package com.ghb.cry.app;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import com.ghb.cry.CryUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,6 +9,6 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    CryUtils.getInstance(this).init();
+    //CryUtils.getInstance(this).init();
   }
 }
