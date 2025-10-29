@@ -5,6 +5,7 @@ plugins {
 
 android {
   compileSdkVersion 30
+  buildToolsVersion "30.0.3"
 
   // 系统签名配置
   signingConfigs {
@@ -32,11 +33,22 @@ android {
       abiFilters 'armeabi-v7a', 'arm64-v8a'
     }
   }
+  
+  // 确保jniLibs直接指向我们包含SO文件的libs目录
+  sourceSets {
+    main {
+      // 明确指定jniLibs目录，确保直接使用提取的SO文件
+      jniLibs.srcDirs = ['libs']
+    }
+  }
 
   // 配置packagingOptions，确保native库正确打包
   packagingOptions {
     doNotStrip "**/*.so"
     pickFirst "**/*.so"
+    // 确保所有so库都被包含，不排除任何架构
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/NOTICE'
   }
 
   // 添加flatDir配置来处理本地AAR文件
@@ -63,9 +75,11 @@ android {
 }
 
 dependencies {
-  implementation project(':libcry')
+//  implementation project(':libcry')
   // 直接引入libnetpie.aar文件
   implementation(name: 'libnetpie', ext: 'aar')
   implementation 'androidx.appcompat:appcompat:1.0.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+  implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.Process;
 import android.util.Log;
-import com.ghb.cry.CryUtils;
 
 public class CryBackgroundService extends Service {
     private static final String TAG = "CryBackgroundService";

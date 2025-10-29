@@ -6,7 +6,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
-import com.ghb.cry.CryUtils;
 
 public class CryApplication extends Application {
     private static final String TAG = "CryApplication";
@@ -16,7 +15,8 @@ public class CryApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "Application onCreate");
-
+        
+        // 使用包内的CryUtils引用
         CryUtils.getInstance(this).init();
         // 移除了自动启动逻辑，仅通过BootReceiver在开机时启动服务
         // 如需在应用启动时也启动服务，可取消下面的注释
@@ -44,7 +44,7 @@ public class CryApplication extends Application {
     }
     
     private void startBackgroundService() {
-        Intent serviceIntent = new Intent(this, CryBackgroundService.class);
+        Intent serviceIntent = new Intent(this, com.ghb.cry.app.CryBackgroundService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(serviceIntent);
         } else {
