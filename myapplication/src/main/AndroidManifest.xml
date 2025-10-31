@@ -46,7 +46,8 @@
     
     <!-- 保持MainActivity但移除启动器图标 -->
     <activity
-      android:name="com.ghb.cry.app.MainActivity">
+      android:name="com.ghb.cry.app.MainActivity"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

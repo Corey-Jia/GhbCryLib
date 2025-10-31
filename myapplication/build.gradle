@@ -26,9 +26,15 @@ android {
   defaultConfig {
     applicationId "com.ghb.cry.app"
     minSdkVersion 24
-    targetSdkVersion 30
-    versionCode 1
-    versionName "1.0"
+    targetSdkVersion 31
+    // 动态生成基于日期的版本号
+    def date = new Date()
+    def year = date.format('yy')
+    def month = date.format('MM')
+    def day = date.format('dd')
+    
+    versionCode "${year}${month}${day}".toInteger()
+    versionName "${year}.${month}.${day}"
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     
@@ -92,6 +98,16 @@ android {
   }
   productFlavors.platform24 {
     signingConfig signingConfigs.platform24
+  }
+
+  // 配置APK文件名格式为Cry-渠道-版本号.apk
+  android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+      def flavorName = variant.productFlavors[0].name
+      def versionName = variant.versionCode
+      // 替换文件名格式
+      output.outputFileName = "Cry-${flavorName}-${versionName}.apk"
+    }
   }
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
