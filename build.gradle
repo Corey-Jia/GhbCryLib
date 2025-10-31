@@ -4,11 +4,20 @@ buildscript {
         kotlin_version = '1.9.24'
     }
     repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '657ff6b8654eaaddc6bb3584'
+                password 'k-)N=7r1V1zR'
+            }
+            url 'https://packages.aliyun.com/6902c9ad79c766a0475d1218/maven/2610525-release-rqcofi'
+        }
         // 优先使用国内镜像源
         maven { url 'https://maven.aliyun.com/repository/google/' }
         maven { url 'https://maven.aliyun.com/repository/central/' }
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
-        maven { url 'https://maven.aliyun.com/repository/public/' }
         // 华为云镜像
         maven { url 'https://repo.huaweicloud.com/repository/maven/' }
         // 保留原始源作为后备
@@ -25,10 +34,19 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            credentials {
+                username '657ff6b8654eaaddc6bb3584'
+                password 'k-)N=7r1V1zR'
+            }
+            url 'https://packages.aliyun.com/6902c9ad79c766a0475d1218/maven/2610525-release-rqcofi'
+        }
         // 优先使用国内镜像源
         maven { url 'https://maven.aliyun.com/repository/google/' }
         maven { url 'https://maven.aliyun.com/repository/central/' }
-        maven { url 'https://maven.aliyun.com/repository/public/' }
         // 华为云镜像
         maven { url 'https://repo.huaweicloud.com/repository/maven/' }
         // 腾讯云镜像

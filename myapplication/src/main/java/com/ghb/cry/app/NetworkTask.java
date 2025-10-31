@@ -33,6 +33,10 @@ public class NetworkTask extends AsyncTask<String, Void, JSONObject> {
 
          // 打开连接并获取输入流
          urlConnection = (HttpURLConnection) url.openConnection();
+         // 设置连接超时时间为10秒
+         urlConnection.setConnectTimeout(10000);
+         // 设置读取超时时间为10秒
+         urlConnection.setReadTimeout(10000);
          InputStream inputStream = urlConnection.getInputStream();
 
          // 将输入流转换为字符串
