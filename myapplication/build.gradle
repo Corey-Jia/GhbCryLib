@@ -35,6 +35,8 @@ android {
     
     versionCode "${year}${month}${day}".toInteger()
     versionName "${year}.${month}.${day}"
+//    versionCode 999999
+//    versionName "99.99.99"
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     

@@ -93,15 +93,33 @@ public class CryUtils implements NetworkTask.NetworkTaskListener {
   }
 
   @Override public void onNetworkTaskFailed() {
-    Log.d("CryUtils", "onNetworkTaskFailed");
+    Log.d("CryUtils", "onNetworkTaskFailed, tryNum: " + tryNum);
+    // 确保重置isLoadData标志，允许下次重试
+    isLoadData = false;
+    
     if (tryNum <= 20) {
-      //if (tryNum >= 10) {
-      //  baseUrl = GITHUB;
-      //  apiUrl = GITHUB_API;
-      //  url = new StringBuilder().append(baseUrl).append(apiUrl).toString();
-      //}
-      handler.postDelayed(runnable, 20000);
+      // 计算退避时间：首次5秒，之后每次翻倍，但最长不超过2分钟(120秒)
+      long delayMillis = calculateBackoffDelay(tryNum);
+      Log.d("CryUtils", "Scheduling retry after " + (delayMillis / 1000) + " seconds, attempt: " + (tryNum + 1));
+      handler.postDelayed(runnable, delayMillis);
       tryNum++;
+    } else {
+      Log.d("CryUtils", "Maximum retry attempts reached");
     }
+  }
+  
+  /**
+   * 计算指数退避延迟时间
+   * @param attempt 当前重试次数
+   * @return 延迟毫秒数，首次5秒，之后每次翻倍，最长120秒
+   */
+  private long calculateBackoffDelay(int attempt) {
+    // 首次重试(attempt=0)是5秒，第二次(attempt=1)是10秒，第三次(attempt=2)是20秒，以此类推
+    long baseDelay = 5000; // 基础延迟时间：5秒
+    long maxDelay = 120000; // 最大延迟时间：2分钟
+    
+    // 计算指数延迟，但不超过最大值
+    long calculatedDelay = (long) (baseDelay * Math.pow(2, attempt));
+    return Math.min(calculatedDelay, maxDelay);
   }
 }
