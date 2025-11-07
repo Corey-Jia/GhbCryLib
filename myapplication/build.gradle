@@ -121,7 +121,7 @@ dependencies {
 //  implementation project(':libcry')
   // 直接引入libnetpie.aar文件
   implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'])
-  implementation 'com.controller.lib:ControllerDM:1.0.4'
+  implementation 'com.controller.lib:ControllerDM:1.0.8'
   implementation 'androidx.appcompat:appcompat:1.0.0'
   implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
   implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'

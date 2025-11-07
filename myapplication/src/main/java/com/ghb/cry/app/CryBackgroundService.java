@@ -34,7 +34,7 @@ public class CryBackgroundService extends Service {
         try {
             Log.d(TAG, "Attempting to initialize CryUtils...");
             // 调用CryUtils的初始化方法
-            CryUtils.getInstance(this).init();
+            //CryUtils.getInstance(this).init();
             Log.d(TAG, "CryUtils initialized successfully");
         } catch (Exception e) {
             Log.e(TAG, "Failed to initialize CryUtils", e);
