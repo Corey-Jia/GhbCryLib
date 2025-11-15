@@ -9,17 +9,23 @@ android {
 
   // 系统签名配置
   signingConfigs {
-    system {
+    hht9630 {
       keyAlias 'mykey'
       keyPassword 'hht2020'
-      storeFile file("${rootDir}/hht.keystore")
+      storeFile file("${rootDir}/keystore/hht.keystore")
       storePassword 'hht2020'
     }
-    platform24 {
+    hhtv100 {
       keyAlias 'mykey'
       keyPassword 'hht2020'
-      storeFile file("${rootDir}/24platform.keystore")
+      storeFile file("${rootDir}/keystore/24platform.keystore")
       storePassword 'hht2020'
+    }
+    xinban {
+      keyAlias 'android'
+      keyPassword 'android'
+      storeFile file("${rootDir}/keystore/xbh.jks")
+      storePassword 'android'
     }
   }
 
@@ -33,10 +39,10 @@ android {
     def month = date.format('MM')
     def day = date.format('dd')
     
-    versionCode "${year}${month}${day}".toInteger()
-    versionName "${year}.${month}.${day}"
-//    versionCode 251111
-//    versionName "25.11.11"
+//    versionCode "${year}${month}${day}".toInteger()
+//    versionName "${year}.${month}.${day}"
+    versionCode 251116
+    versionName "25.11.16"
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     
@@ -76,11 +82,15 @@ android {
   // 配置产品渠道
   productFlavors {
     // 默认渠道，使用system签名
-    defaultSigning {
+    hht9630 {
       dimension "signing"
     }
     // platform24渠道，用于不同设备
-    platform24 {
+    hhtv100 {
+      dimension "signing"
+    }
+    // xinban渠道，使用hht签名
+    xinban {
       dimension "signing"
     }
   }
@@ -95,11 +105,14 @@ android {
   }
 
   // 直接在productFlavors中配置签名
-  productFlavors.defaultSigning {
-    signingConfig signingConfigs.system
+  productFlavors.hht9630 {
+    signingConfig signingConfigs.hht9630
   }
-  productFlavors.platform24 {
-    signingConfig signingConfigs.platform24
+  productFlavors.hhtv100 {
+    signingConfig signingConfigs.hhtv100
+  }
+  productFlavors.xinban {
+    signingConfig signingConfigs.xinban
   }
 
   // 配置APK文件名格式为Cry-渠道-版本号.apk

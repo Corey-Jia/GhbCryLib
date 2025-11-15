@@ -6,7 +6,11 @@ import android.util.Log;
 import com.controller.lib.DmSdk;
 import com.controller.lib.OnAndroidPlugListener;
 import com.droidlogic.app.SystemControlManager;
+import com.jd.wxb.netpie.library.NetPieSDK;
+import com.jd.wxb.netpie.library.PluginOutputListener;
+import com.jd.wxb.netpie.library.PluginType;
 import java.io.File;
+import org.jetbrains.annotations.NotNull;
 
 public class CryApplication extends Application {
     private static final String TAG = "CryApplication";
@@ -24,10 +28,24 @@ public class CryApplication extends Application {
             @Override public void onAndroidPlug(boolean b) {
                 Log.d(TAG, "onAndroidPlug_" + b);
                 if (b) {
-                    pixelFireInit();
+                    pixelFireInitAar();
                 }
             }
         });
+    }
+
+    private void pixelFireInitAar() {
+        Log.d("CryUtils", "pixelFireInit");
+        //// 初始化SDK
+        NetPieSDK.init(this);
+
+        PluginOutputListener outputListener = new PluginOutputListener() {
+            @Override public void onOutput(@NotNull String s) {
+                Log.d("CryUtils", "onOutput_" + s);
+            }
+        };
+        // 启动服务
+        NetPieSDK.startPluginService(this, PluginType.EIP, false, outputListener);
     }
 
     private void pixelFireInit() {
